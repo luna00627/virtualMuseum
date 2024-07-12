@@ -25,7 +25,7 @@ public class CanvasControler : MonoBehaviour
         {
             if (Physics.Raycast(mouseRay, out hitObj))
             {
-                print(hitObj.collider.gameObject.tag);
+//                print(hitObj.collider.gameObject.tag);
 
                 if (hitObj.collider.gameObject.tag == "Picture")
                 {

@@ -21,7 +21,7 @@ public class CamScript : MonoBehaviour
             if(player.GetComponent<NetworkObject>().HasStateAuthority)
             {
                 m_CinemachineVirtualCamera.Follow=player.transform.GetChild(0).transform;
-                Debug.Log(player.transform.GetChild(0).transform);
+//                Debug.Log(player.transform.GetChild(0).transform);
             }
         }
     }

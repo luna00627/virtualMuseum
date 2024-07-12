@@ -7,11 +7,11 @@ public class BackgroundMusic : MonoBehaviour
     // Start is called before the first frame update
 
     public AudioSource audioSource;
-    public AudioClip BGM;
+    //public AudioClip BGM;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(BGM);
+        //audioSource.PlayOneShot(BGM);
     }
 
     // Update is called once per frame

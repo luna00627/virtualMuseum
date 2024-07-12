@@ -47,7 +47,7 @@ public class Poster : MonoBehaviour
 
     public void showInfoCanvas(string tag)
     {
-        Debug.Log(tag);
+        //Debug.Log(tag);
         int index = int.Parse(tag);
         image.sprite = poster[index];
         InfoCanvas.enabled = true;
