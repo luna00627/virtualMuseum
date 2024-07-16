@@ -7,6 +7,7 @@ public class ExhibitInteraction : MonoBehaviour
     public Camera infoCamera;
     public GameObject manager;
     public GameObject selectRoomCanvas;
+    private bool isInfo = false;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class ExhibitInteraction : MonoBehaviour
         Vector3 pos = Input.mousePosition;
         Ray mouseRay = mainCamera.ScreenPointToRay(pos);
 
-        if (Input.GetMouseButtonDown(0))
+        if (!isInfo && Input.GetMouseButtonDown(0))
         {
             RaycastHit hitObj;
             if (Physics.Raycast(mouseRay, out hitObj))
@@ -54,6 +55,7 @@ public class ExhibitInteraction : MonoBehaviour
         }
         selectRoomCanvas.SetActive(false);
         infoCamera.gameObject.SetActive(true);
+        isInfo = true;
     }
 
     public void HideInfoCanvas()
@@ -64,5 +66,6 @@ public class ExhibitInteraction : MonoBehaviour
         }
         selectRoomCanvas.SetActive(true);
         infoCamera.gameObject.SetActive(false);
+        isInfo = false;
     }
 }

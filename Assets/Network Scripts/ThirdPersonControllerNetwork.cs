@@ -194,12 +194,12 @@ namespace StarterAssets
         {
             float rotationSpeed = 5.0f;
 
-            if (Input.GetMouseButton(0)) 
+            if (Input.GetMouseButton(1)) 
             {
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? rotationSpeed : rotationSpeed * Time.deltaTime;
 
-                _cinemachineTargetYaw += Input.GetAxis("Mouse X") * deltaTimeMultiplier;
-                _cinemachineTargetPitch -= Input.GetAxis("Mouse Y") * deltaTimeMultiplier;
+                _cinemachineTargetYaw -= Input.GetAxis("Mouse X") * deltaTimeMultiplier;
+                _cinemachineTargetPitch += Input.GetAxis("Mouse Y") * deltaTimeMultiplier;
             }
 
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
