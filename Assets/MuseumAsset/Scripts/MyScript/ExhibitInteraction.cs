@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExhibitInteraction : MonoBehaviour
 {
-    public GameObject[] descriptionCanvases; // 所有展品对应的描述画布数组
+    public GameObject[] descriptionCanvases; 
     public Camera mainCamera;
     public Camera infoCamera;
     public GameObject manager;
@@ -11,7 +11,6 @@ public class ExhibitInteraction : MonoBehaviour
 
     void Start()
     {
-        // 初始时隐藏所有描述画布和信息相机
         foreach (GameObject canvas in descriptionCanvases)
         {
             canvas.SetActive(false);
