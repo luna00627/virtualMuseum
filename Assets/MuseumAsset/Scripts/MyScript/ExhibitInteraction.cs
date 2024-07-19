@@ -8,6 +8,9 @@ public class ExhibitInteraction : MonoBehaviour
     public GameObject manager;
     public GameObject selectRoomCanvas;
     private bool isInfo = false;
+    private GameObject player;
+    private GameObject discussionObject;
+    private GameObject descriptionObject;
 
     void Start()
     {
@@ -52,9 +55,20 @@ public class ExhibitInteraction : MonoBehaviour
                 canvas.SetActive(false);
             }
         }
+
+        discussionObject = GameObject.Find("討論");
+        descriptionObject = GameObject.Find("說明");
+        player = GameObject.Find("PlayerArmature 1(Clone)");
+
+        
+        
         selectRoomCanvas.SetActive(false);
         infoCamera.gameObject.SetActive(true);
         isInfo = true;
+
+        discussionObject.SetActive(false);
+        descriptionObject.SetActive(true);
+        player.SetActive(false);
     }
 
     public void HideInfoCanvas()
@@ -63,8 +77,12 @@ public class ExhibitInteraction : MonoBehaviour
         {
             canvas.SetActive(false);
         }
+
+        player.SetActive(true);
         selectRoomCanvas.SetActive(true);
         infoCamera.gameObject.SetActive(false);
+        descriptionObject.SetActive(true);
+        discussionObject.SetActive(true);
         isInfo = false;
     }
 }

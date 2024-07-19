@@ -29,9 +29,9 @@ public class InputBehaviourPrototype : Fusion.Behaviour, INetworkRunnerCallbacks
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_RIGHT, true);
     }
 
-    if (Input.GetKey(KeyCode.Space)) {
-      frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_JUMP, true);
-    }
+    // if (Input.GetKey(KeyCode.Space)) {
+    //   frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_JUMP, true);
+    // }
 
     if (Input.GetKey(KeyCode.C)) {
       frameworkInput.Buttons.Set(NetworkInputPrototype.BUTTON_CROUCH, true);

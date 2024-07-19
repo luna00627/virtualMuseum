@@ -61,7 +61,7 @@ public class positionTest : MonoBehaviour
             }
             else if(project == "project5"){
                 projectName = "project5";
-                transform.position = new Vector3(-195, 1.1f, 50);
+                transform.position = new Vector3(-195, 1.1f, 35);
                 Invoke("check", 0.2f);
                 projectTP.flag5 = false;
             }
