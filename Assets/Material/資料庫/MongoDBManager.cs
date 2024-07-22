@@ -8,14 +8,25 @@ public class MongoDBManager : MonoBehaviour
     private static MongoDBManager instance;
     private MongoClient client;
     private IMongoDatabase database;
-    //private IMongoCollection<Comment> commentsCollection;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         string connectionString = "mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity";
         client = new MongoClient(connectionString);
         database = client.GetDatabase("海洋館");
-        //commentsCollection = database.GetCollection<Comment>("exhibitComments");
     }
 
     public static MongoDBManager Instance
@@ -24,7 +35,7 @@ public class MongoDBManager : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = new MongoDBManager();
+                Debug.LogError("MongoDBManager instance has not been initialized. Make sure it's attached to an active GameObject in the scene.");
             }
             return instance;
         }

@@ -19,6 +19,7 @@ TagManager:
   - "\u9C77\u9B5A\u5CA9"
   - "\u6D77\u86DE\u8753\u5CA9"
   - "\u4EBA\u9762\u7345\u8EAB\u5CA9"
+  - prize
   layers:
   - Default
   - TransparentFX
