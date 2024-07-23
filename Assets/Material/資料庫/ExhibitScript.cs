@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using System.Threading.Tasks;
 
 public class ExhibitScript : MonoBehaviour
 {
@@ -10,14 +11,15 @@ public class ExhibitScript : MonoBehaviour
     public Button submitButton;
     public Transform commentsContainer;
     public GameObject commentPrefab;
-    public Sprite[] avatars;
 
     private MongoDBManager dbManager;
+    private AvatarManager avatarManager;
     private string exhibitId;
 
     private void Start()
     {
         dbManager = FindObjectOfType<MongoDBManager>();
+        avatarManager = FindObjectOfType<AvatarManager>();
         submitButton.onClick.AddListener(OnSubmitComment);
         exhibitId = gameObject.name;
         LoadComments();
@@ -39,9 +41,19 @@ public class ExhibitScript : MonoBehaviour
                 AvatarIndex = avatarIndex,
                 CreatedAt = DateTime.Now
             };
+
+            // 添加評論到資料庫
             await dbManager.AddComment(exhibitId, newComment);
+            
+            // 清空輸入欄位
             commentInputField.text = "";
-            LoadComments();
+
+            // 直接在 UI 上添加新評論
+            AddCommentToUI(newComment);
+            
+            // 等待一幀後強制更新佈局
+            await Task.Yield();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(commentsContainer.GetComponent<RectTransform>());
         }
     }
 
@@ -57,20 +69,29 @@ public class ExhibitScript : MonoBehaviour
 
         foreach (var comment in comments)
         {
-            GameObject newCommentObj = Instantiate(commentPrefab, commentsContainer);
-            newCommentObj.transform.SetParent(commentsContainer, false); // 確保保持佈局
-
-            // 獲取各顯示區塊的引用
-            Image avatarImage = newCommentObj.transform.Find("Panel/AvatarImage").GetComponent<Image>();
-            TMP_Text userNameText = newCommentObj.transform.Find("Panel/UserName").GetComponent<TMP_Text>();
-            TMP_Text commentText = newCommentObj.transform.Find("CommentText").GetComponent<TMP_Text>();
-            TMP_Text dateText = newCommentObj.transform.Find("DateText").GetComponent<TMP_Text>();
-
-            // 設置各顯示區塊的內容
-            avatarImage.sprite = avatars[comment.AvatarIndex];
-            userNameText.text = comment.UserName;
-            commentText.text = comment.Text;
-            dateText.text = comment.CreatedAt.ToString("yyyy-MM-dd HH:mm");
+            AddCommentToUI(comment);
         }
+        
+        // 等待一幀後強制更新佈局
+        await Task.Yield();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(commentsContainer.GetComponent<RectTransform>());
+    }
+
+    private void AddCommentToUI(Comment comment)
+    {
+        GameObject newCommentObj = Instantiate(commentPrefab, commentsContainer);
+        newCommentObj.transform.SetParent(commentsContainer, false); // 確保保持佈局
+
+        // 獲取各顯示區塊的引用
+        Image avatarImage = newCommentObj.transform.Find("Panel/AvatarImage").GetComponent<Image>();
+        TMP_Text userNameText = newCommentObj.transform.Find("Panel/UserName").GetComponent<TMP_Text>();
+        TMP_Text commentText = newCommentObj.transform.Find("CommentText").GetComponent<TMP_Text>();
+        TMP_Text dateText = newCommentObj.transform.Find("DateText").GetComponent<TMP_Text>();
+
+        // 設置各顯示區塊的內容
+        avatarImage.sprite = avatarManager.GetAvatar(comment.AvatarIndex);
+        userNameText.text = comment.UserName;
+        commentText.text = comment.Text;
+        dateText.text = comment.CreatedAt.ToString("yyyy-MM-dd HH:mm");
     }
 }

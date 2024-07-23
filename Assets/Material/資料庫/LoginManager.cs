@@ -21,7 +21,7 @@ public class LoginManager : MonoBehaviour
 
     private void Start()
     {
-        client = new MongoClient("mongodb://localhost:27017");
+        client = new MongoClient("mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity");
         userDatabase = client.GetDatabase("UserDatabase");
         accountCollection = userDatabase.GetCollection<BsonDocument>("UserAccounts");
 
