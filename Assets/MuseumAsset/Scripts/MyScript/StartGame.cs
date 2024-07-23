@@ -5,20 +5,24 @@ using System.Collections;
 public class StartGame : MonoBehaviour
 {
     public Camera mainCamera;
-    //public GameObject manager;
-    //public GameObject selectRoomCanvas;
     public GameObject closedChest; 
     public GameObject openedChest; 
     public GameObject confirmPanel;
+    public Button confirmButton; // 確認按鈕
+    public Button cancelButton;  // 取消按鈕
+    public GameObject quizPanel; // 顯示題目和選項的 Panel
+
     private bool isInfo = false;
-    // private GameObject player;
-    // private GameObject discussionObject;
-    // private GameObject descriptionObject;
 
     void Start()
     {
         openedChest.SetActive(false); 
         confirmPanel.SetActive(false);
+        quizPanel.SetActive(false); // 確保在遊戲開始前不顯示題目面板
+        
+        // 設置按鈕點擊事件
+        confirmButton.onClick.AddListener(OnConfirmButtonClick);
+        cancelButton.onClick.AddListener(OnCancelButtonClick);
     }
 
     void Update()
@@ -31,7 +35,6 @@ public class StartGame : MonoBehaviour
             RaycastHit hitObj;
             if (Physics.Raycast(mouseRay, out hitObj))
             {
-                print(hitObj.collider.gameObject.tag);
                 if (hitObj.collider.CompareTag("prize"))
                 {
                     OpenChest();
@@ -62,6 +65,7 @@ public class StartGame : MonoBehaviour
     public void OnConfirmButtonClick()
     {
         confirmPanel.SetActive(false);
+        quizPanel.SetActive(true); // 顯示題目面板
     }
 
     public void OnCancelButtonClick()
