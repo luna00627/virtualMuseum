@@ -36,7 +36,7 @@ public class LoginManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
-            messageText.text = "使用者名稱和密碼不行為空";
+            messageText.text = "使用者名稱和密碼不能為空";
             return;
         }
 
@@ -45,8 +45,9 @@ public class LoginManager : MonoBehaviour
 
         if (existingAccount != null)
         {
-            LoggedInUsername = username;
-            LoggedInAvatarIndex = existingAccount["avatarIndex"].AsInt32;
+            // 將使用者數據存儲到 UserData 中
+            UserData.Instance.Username = username;
+            UserData.Instance.AvatarIndex = existingAccount["avatarIndex"].AsInt32;
 
             messageText.text = "登入成功!";
             loginPanel.SetActive(false);
@@ -56,6 +57,7 @@ public class LoginManager : MonoBehaviour
             messageText.text = "使用者名稱或密碼錯誤";
         }
     }
+
 
 
 }

@@ -4,13 +4,21 @@ using System.Collections;
 
 public class StartGame : MonoBehaviour
 {
-    public Camera mainCamera;
+    [Header("Chest States")]
     public GameObject closedChest; 
-    public GameObject openedChest; 
-    public GameObject confirmPanel;
+    public GameObject openedChest;
+
+    [Header("Camera")]
+    public Camera mainCamera; 
+
+    [Header("Confirmation Panel")]
+    public GameObject confirmPanel; 
     public Button confirmButton; // 確認按鈕
     public Button cancelButton;  // 取消按鈕
+
+    [Header("Quiz and Result Panels")]
     public GameObject quizPanel; // 顯示題目和選項的 Panel
+    public GameObject resultPanel; // 顯示答題結果的 Panel
 
     private bool isInfo = false;
 
@@ -18,7 +26,8 @@ public class StartGame : MonoBehaviour
     {
         openedChest.SetActive(false); 
         confirmPanel.SetActive(false);
-        quizPanel.SetActive(false); // 確保在遊戲開始前不顯示題目面板
+        quizPanel.SetActive(false); 
+        resultPanel.SetActive(false);
         
         // 設置按鈕點擊事件
         confirmButton.onClick.AddListener(OnConfirmButtonClick);
