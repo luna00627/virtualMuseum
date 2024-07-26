@@ -36,7 +36,7 @@ public class StartSecondGame : MonoBehaviour
             RaycastHit hitObj;
             if (Physics.Raycast(mouseRay, out hitObj))
             {
-                if (hitObj.collider.CompareTag("prize"))
+                if (hitObj.collider.CompareTag("prize2"))
                 {
                     OpenChest();
                 }

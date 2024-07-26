@@ -3,7 +3,8 @@ using UnityEngine;
 public class ComponentDisabler : MonoBehaviour
 {
     //public GameObject[] objectsToControl; 
-    public GameObject chest;
+    public GameObject firstChest;
+    public GameObject secondChest;
     public GameObject selectRoomCanvas;
     private ExhibitInteraction exhibitInteraction;
     private AudioSource audioSource;
@@ -18,12 +19,24 @@ public class ComponentDisabler : MonoBehaviour
 
     public void DisableComponents()
     {
-        if (chest != null)
+        if (firstChest != null)
         {
-            var chestComponent = chest.GetComponent("StartGame");
-            if (chestComponent != null)
+            var firstChestComponent = firstChest.GetComponent("StartFirstGame");
+            if (firstChestComponent != null)
             {
-                if (chestComponent is Behaviour behaviour)
+                if (firstChestComponent is Behaviour behaviour)
+                {
+                    behaviour.enabled = false;
+                }
+            }
+        }
+
+        if (secondChest != null)
+        {
+            var secondChestComponent = secondChest.GetComponent("StartFirstGame");
+            if (secondChestComponent != null)
+            {
+                if (secondChestComponent is Behaviour behaviour)
                 {
                     behaviour.enabled = false;
                 }
@@ -49,12 +62,24 @@ public class ComponentDisabler : MonoBehaviour
         //         }
         //     }
         // }
-        if (chest != null)
+        if (firstChest != null)
         {
-            var chestComponent = chest.GetComponent("StartGame");
-            if (chestComponent != null)
+            var firstChestComponent = firstChest.GetComponent("StartFirstGame");
+            if (firstChestComponent != null)
             {
-                if (chestComponent is Behaviour behaviour)
+                if (firstChestComponent is Behaviour behaviour)
+                {
+                    behaviour.enabled = true;
+                }
+            }
+        }
+
+        if (secondChest != null)
+        {
+            var secondChestComponent = secondChest.GetComponent("StartSecondGame");
+            if (secondChestComponent != null)
+            {
+                if (secondChestComponent is Behaviour behaviour)
                 {
                     behaviour.enabled = true;
                 }
