@@ -10,6 +10,7 @@ public class Card : MonoBehaviour
     private Image cardImage;
     private Button cardButton;
     private bool isFlipped = false;
+    public bool isMatched { get; private set; } = false;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class Card : MonoBehaviour
 
     public void HideCard()
     {
-        gameObject.SetActive(false);
+        cardImage.enabled = false;
+        isMatched = true;
     }
 }
