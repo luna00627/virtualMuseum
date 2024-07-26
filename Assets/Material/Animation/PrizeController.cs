@@ -5,6 +5,7 @@ using System.Collections;
 public class PrizeController : MonoBehaviour
 {
     public GameObject manager;
+    public GameObject gameCanvas;
     private Animator prizeAnimator;
     private Renderer prizeRenderer;
     private QuizManager quizManager;
@@ -43,6 +44,7 @@ public class PrizeController : MonoBehaviour
         {
             quizManager.resultPanel.SetActive(false);
         }
+        gameCanvas.SetActive(false);
         componentDisabler.EnableComponents();
     }
 }
