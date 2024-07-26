@@ -11,20 +11,25 @@ public class LoginManager : MonoBehaviour
     public TMP_InputField passwordInputField;
     public Button loginButton;
     public TextMeshProUGUI messageText;
+    public GameObject manager;
 
     private MongoClient client;
     private IMongoDatabase userDatabase;
     private IMongoCollection<BsonDocument> accountCollection;
+    private ComponentDisabler componentDisabler;
+
 
     public static string LoggedInUsername { get; private set; }
     public static int LoggedInAvatarIndex { get; private set; }
 
     private void Start()
     {
+        componentDisabler = manager.GetComponent<ComponentDisabler>();
         client = new MongoClient("mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity");
         userDatabase = client.GetDatabase("UserDatabase");
         accountCollection = userDatabase.GetCollection<BsonDocument>("UserAccounts");
 
+        componentDisabler.DisableComponents();
         loginButton.onClick.AddListener(OnLogin);
         loginPanel.SetActive(true);
     }
@@ -51,6 +56,7 @@ public class LoginManager : MonoBehaviour
 
             messageText.text = "登入成功!";
             loginPanel.SetActive(false);
+            componentDisabler.EnableComponents();
         }
         else
         {
