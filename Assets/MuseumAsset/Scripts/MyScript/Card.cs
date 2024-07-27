@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
     public Sprite cardFront;
     public Sprite cardBack;
 
+    private bool isIgnoreFlip = false;
     private Image cardImage;
     private Button cardButton;
     private bool isFlipped = false;
@@ -31,8 +32,11 @@ public class Card : MonoBehaviour
     {
         if (!isFlipped)
         {
+            isIgnoreFlip = CardManager.Instance.CardSelected(this);
+            if (isIgnoreFlip) return;
+
             Flip();
-            CardManager.Instance.CardSelected(this);
+
         }
     }
 

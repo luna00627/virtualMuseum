@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     private List<int> cardIndices = new List<int>();
     private Card firstSelectedCard = null;
     private Card secondSelectedCard = null;
+    private bool isCheckingMatch = false; // 是否正在檢查配對
 
     [Header("Confirmation Panel")]
     public GameObject confirmPanel;
@@ -90,21 +91,30 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void CardSelected(Card selectedCard)
+    public bool CardSelected(Card selectedCard)
     {
-        if (firstSelectedCard == null)
+        if (isCheckingMatch) 
         {
-            firstSelectedCard = selectedCard;
+            return true; // 正在檢查配對
         }
-        else if (secondSelectedCard == null)
+        else 
         {
-            secondSelectedCard = selectedCard;
-            StartCoroutine(CheckMatch());
+            if (firstSelectedCard == null)
+            {
+                firstSelectedCard = selectedCard;
+            }
+            else if (secondSelectedCard == null)
+            {
+                secondSelectedCard = selectedCard;
+                StartCoroutine(CheckMatch());
+            }
+            return false;
         }
     }
 
     private IEnumerator<WaitForSeconds> CheckMatch()
     {
+        isCheckingMatch = true; // 開始檢查配對
         yield return new WaitForSeconds(1f);
 
         if (firstSelectedCard.cardIndex == secondSelectedCard.cardIndex)
@@ -120,6 +130,7 @@ public class CardManager : MonoBehaviour
 
         firstSelectedCard = null;
         secondSelectedCard = null;
+        isCheckingMatch = false; // 結束檢查配對
 
         CheckWinCondition();
     }

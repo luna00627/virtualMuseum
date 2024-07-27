@@ -5,7 +5,7 @@ public class ExhibitInteraction : MonoBehaviour
     public GameObject[] descriptionCanvases; 
     public Camera mainCamera;
     public Camera infoCamera;
-    public GameObject manager;
+    //public GameObject manager;
     public GameObject selectRoomCanvas;
     private bool isInfo = false;
     private GameObject player;

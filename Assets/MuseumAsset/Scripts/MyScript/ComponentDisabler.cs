@@ -43,7 +43,10 @@ public class ComponentDisabler : MonoBehaviour
             }
         }
         selectRoomCanvas.SetActive(false);
-        exhibitInteraction.enabled = false;
+        if (exhibitInteraction != null)
+        {
+            exhibitInteraction.enabled = false;
+        }
     }
 
     public void EnableComponents()

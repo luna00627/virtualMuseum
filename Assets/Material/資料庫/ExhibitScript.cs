@@ -28,8 +28,8 @@ public class ExhibitScript : MonoBehaviour
     private async void OnSubmitComment()
     {
         string commentText = commentInputField.text;
-        string playerName = LoginManager.LoggedInUsername;
-        int avatarIndex = LoginManager.LoggedInAvatarIndex;
+        string playerName = UserData.Instance.Username;
+        int avatarIndex = UserData.Instance.AvatarIndex;
 
         if (!string.IsNullOrEmpty(commentText))
         {
