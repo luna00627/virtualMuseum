@@ -7,7 +7,6 @@ public class CardManager : MonoBehaviour
 {
     public static CardManager Instance;
 
-    // 卡片管理
     private List<Card> allCards = new List<Card>();
     private List<int> cardIndices = new List<int>();
     private Card firstSelectedCard = null;
@@ -35,9 +34,11 @@ public class CardManager : MonoBehaviour
     public Button confirmPrizeButton; // 確認獎品按鈕
 
     [Header("Managers")]
+    public GameObject manager; 
     public GameObject databaseManager; 
     private AvatarManager avatarManager;
     private PrizeController prizeController;
+    private ComponentDisabler componentDisabler;
 
     private void Awake()
     {
@@ -59,6 +60,8 @@ public class CardManager : MonoBehaviour
         resultPanel.SetActive(false);
         avatarManager = databaseManager.GetComponent<AvatarManager>();
         prizeController = prize.GetComponent<PrizeController>();
+
+        componentDisabler = manager.GetComponent<ComponentDisabler>();
     }
 
     private void SetupCards()
@@ -188,6 +191,7 @@ public class CardManager : MonoBehaviour
     public void OnCancelButtonClick()
     {
         confirmPanel.SetActive(false); 
+        componentDisabler.EnableComponents();
     }
     
     void OnConfirmPrizeButtonClick()

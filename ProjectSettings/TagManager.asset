@@ -21,6 +21,7 @@ TagManager:
   - "\u4EBA\u9762\u7345\u8EAB\u5CA9"
   - prize1
   - prize2
+  - Exhibits
   layers:
   - Default
   - TransparentFX

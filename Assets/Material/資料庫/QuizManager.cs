@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // 引入 TextMeshPro 命名空間
+using TMPro; 
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -25,14 +25,15 @@ public class QuizManager : MonoBehaviour
     public Image avatarImage;
     public TextMeshProUGUI correctAnswersText;
     public TextMeshProUGUI prizeText;
-    public Button confirmPrizeButton;
-    public Button retryButton;
+    public Button confirmPrizeButton; // 確認獎品按鈕
+    public Button retryButton; // 再玩一次按鈕
     
     [Header("Symbols")]
     public Sprite correctSymbol; // 打勾符號
     public Sprite incorrectSymbol; // 打叉符號
 
     [Header("Managers")]
+    public GameObject manager;
     public GameObject databaseManager;
     private AvatarManager avatarManager;
     private int totalCorrectAnswers = 0; // 答對的題數
@@ -40,6 +41,7 @@ public class QuizManager : MonoBehaviour
     private int currentQuestionIndex = 0;
     private PrizeController prizeController;
 
+    private ComponentDisabler componentDisabler;
 
     private string[] questions = { 
         "臭肚魚為何稱為臭肚魚?", 
@@ -92,6 +94,8 @@ public class QuizManager : MonoBehaviour
 
         // Parameters
         totalQuestions = questions.Length;
+
+        componentDisabler = manager.GetComponent<ComponentDisabler>();
     }
 
     void ShowQuestion(int index)
@@ -115,14 +119,12 @@ public class QuizManager : MonoBehaviour
         }
         for (int i = 0; i < answerButtons.Length; i++)
         {
-            Debug.Log("i = " + i);
             if (i < numOptions)
             {
                 answerButtons[i].gameObject.SetActive(true);
                 TMP_Text buttonText = answerButtons[i].GetComponentInChildren<TMP_Text>();
                 buttonText.text = currentAnswers[i];
 
-                // 使用局部變量來解決閉包問題
                 int localQuestionIndex = index;
                 int localAnswerIndex = i;
 
@@ -146,8 +148,6 @@ public class QuizManager : MonoBehaviour
 
     void OnAnswerSelected(int questionIndex, int answerIndex)
     {
-        Debug.Log($"選擇了第 {questionIndex + 1} 題的第 {answerIndex + 1} 選項");
-
         if (answerIndex < 0 || answerIndex >= answerButtons.Length)
         {
             Debug.LogError($"Answer index {answerIndex} is out of bounds for answerButtons array.");
@@ -167,7 +167,7 @@ public class QuizManager : MonoBehaviour
         // 顯示正確答案
         ShowAnswerFeedback(answerButtons[correctAnswers[questionIndex]], true);
 
-        // 顯示解析文本
+        // 顯示解析
         explanationText.text = explanations[questionIndex];
         explanationText.gameObject.SetActive(true);
         
@@ -288,6 +288,7 @@ public class QuizManager : MonoBehaviour
     public void OnCancelButtonClick()
     {
         confirmPanel.SetActive(false); 
+        componentDisabler.EnableComponents();
     }
 
     void OnConfirmPrizeButtonClick()

@@ -26,25 +26,7 @@ public class StartFirstGame : MonoBehaviour
         componentDisabler = manager.GetComponent<ComponentDisabler>();
     }
 
-    void Update()
-    {
-        Vector3 pos = Input.mousePosition;
-        Ray mouseRay = mainCamera.ScreenPointToRay(pos);
-
-        if (!isInfo && Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hitObj;
-            if (Physics.Raycast(mouseRay, out hitObj))
-            {
-                if (hitObj.collider.CompareTag("prize1"))
-                {
-                    OpenChest();
-                }
-            }
-        }
-    }
-
-    void OpenChest()
+    public void OpenChest()
     {
         closedChest.SetActive(false);
         openedChest.SetActive(true); 
