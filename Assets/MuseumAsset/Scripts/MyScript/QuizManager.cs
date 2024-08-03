@@ -1,5 +1,7 @@
+using MongoDB.Bson;
+using MongoDB.Driver;
 using UnityEngine;
-using TMPro; 
+using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -45,6 +47,10 @@ public class QuizManager : MonoBehaviour
     private ComponentDisabler componentDisabler;
     private StartFirstGame startFirstGame;
 
+    private MongoClient client;
+    private IMongoDatabase userDatabase;
+    private IMongoCollection<BsonDocument> accountCollection;
+
     private string[] questions = { 
         "臭肚魚為何稱為臭肚魚?", 
         "下面哪個生物不會住在河口區?", 
@@ -78,6 +84,10 @@ public class QuizManager : MonoBehaviour
 
     void Start()
     {
+        client = new MongoClient("mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity");
+        userDatabase = client.GetDatabase("UserDatabase");
+        accountCollection = userDatabase.GetCollection<BsonDocument>("UserAccounts");
+        
         // Confirm Panel
         confirmPanel.SetActive(false);
         confirmButton.onClick.AddListener(OnConfirmButtonClick);
@@ -115,7 +125,6 @@ public class QuizManager : MonoBehaviour
 
         // 更新進度文本
         UpdateProgressText(index + 1, questions.Length);
-        Debug.Log("answerButtons.Length = " + answerButtons.Length);
         foreach (var button in answerButtons)
         {
             ResetAnswerButton(button);
@@ -298,6 +307,7 @@ public class QuizManager : MonoBehaviour
     void OnConfirmPrizeButtonClick()
     {
         prizeController.ShowPrize();
+        AddPrizeToUser("PrizeName");
     }
 
     void OnRetryButtonClick()
@@ -308,4 +318,14 @@ public class QuizManager : MonoBehaviour
         gamePanel.SetActive(true);
         ShowQuestion(currentQuestionIndex);
     } 
+
+    private async void AddPrizeToUser(string prizeName)
+    {
+        var filter = Builders<BsonDocument>.Filter.Eq("username", UserData.Instance.Username);
+        var update = Builders<BsonDocument>.Update.AddToSet("prizes", prizeName);
+
+        await accountCollection.UpdateOneAsync(filter, update);
+
+        UserData.Instance.Prizes.Add(prizeName);
+    }
 }

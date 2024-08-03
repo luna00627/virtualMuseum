@@ -9,19 +9,6 @@ public class MongoDBManager : MonoBehaviour
     private MongoClient client;
     private IMongoDatabase database;
 
-    // private void Awake()
-    // {
-    //     if (instance == null)
-    //     {
-    //         instance = this;
-    //         DontDestroyOnLoad(gameObject);
-    //     }
-    //     else
-    //     {
-    //         Destroy(gameObject);
-    //     }
-    // }
-
     private void Start()
     {
         string connectionString = "mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity";
