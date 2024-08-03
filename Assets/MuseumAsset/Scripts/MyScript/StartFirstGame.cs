@@ -6,9 +6,9 @@ public class StartFirstGame : MonoBehaviour
 {
     public GameObject manager;
 
-    [Header("Chest States")]
-    public GameObject closedChest; 
-    public GameObject openedChest;
+    [Header("Treasure States")]
+    public GameObject closedTreasure; 
+    public GameObject openedTreasure;
 
     [Header("Camera")]
     public Camera mainCamera; 
@@ -21,15 +21,15 @@ public class StartFirstGame : MonoBehaviour
 
     void Start()
     {
-        openedChest.SetActive(false); 
+        openedTreasure.SetActive(false); 
         quizManager = gameCanvas.GetComponent<QuizManager>();
         componentDisabler = manager.GetComponent<ComponentDisabler>();
     }
 
-    public void OpenChest()
+    public void OpenTreasure()
     {
-        closedChest.SetActive(false);
-        openedChest.SetActive(true); 
+        closedTreasure.SetActive(false);
+        openedTreasure.SetActive(true); 
         StartCoroutine(ShowConfirmPanelWithDelay(0.5f)); // 延遲0.5秒顯示確認畫面
     }
 
@@ -40,10 +40,10 @@ public class StartFirstGame : MonoBehaviour
         componentDisabler.DisableComponents();
     }
 
-    void CloseChest()
+    public void CloseTreasure()
     {
-        closedChest.SetActive(true);
-        openedChest.SetActive(false); 
+        closedTreasure.SetActive(true);
+        openedTreasure.SetActive(false); 
     }
 
     

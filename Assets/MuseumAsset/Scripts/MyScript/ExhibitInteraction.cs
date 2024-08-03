@@ -6,11 +6,11 @@ public class ExhibitInteraction : MonoBehaviour
     public GameObject[] descriptionCanvases; 
     public Camera mainCamera;
     public Camera infoCamera;
-    public GameObject selectRoomCanvas;
     private GameObject player;
     private GameObject discussionObject;
     private GameObject descriptionObject;
     private RaycastManager raycastManager;
+    private ComponentDisabler componentDisabler;
 
     void Start()
     {
@@ -20,6 +20,7 @@ public class ExhibitInteraction : MonoBehaviour
         }
         infoCamera.gameObject.SetActive(false);
         raycastManager = manager.GetComponent<RaycastManager>();
+        componentDisabler = manager.GetComponent<ComponentDisabler>();
     }
 
     public void ShowInfoCanvas(string objectName)
@@ -40,15 +41,13 @@ public class ExhibitInteraction : MonoBehaviour
         descriptionObject = GameObject.Find("說明");
         player = GameObject.Find("PlayerArmature 1(Clone)");
 
-        
-        
-        selectRoomCanvas.SetActive(false);
         infoCamera.gameObject.SetActive(true);
         raycastManager.isInfo = true;
 
         discussionObject.SetActive(false);
         descriptionObject.SetActive(true);
         player.SetActive(false);
+        componentDisabler.DisableComponents();
     }
 
     public void HideInfoCanvas()
@@ -59,10 +58,10 @@ public class ExhibitInteraction : MonoBehaviour
         }
 
         player.SetActive(true);
-        selectRoomCanvas.SetActive(true);
         infoCamera.gameObject.SetActive(false);
         descriptionObject.SetActive(true);
         discussionObject.SetActive(true);
         raycastManager.isInfo = false;
+        componentDisabler.EnableComponents();
     }
 }

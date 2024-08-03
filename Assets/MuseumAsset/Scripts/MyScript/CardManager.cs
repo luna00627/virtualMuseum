@@ -17,6 +17,7 @@ public class CardManager : MonoBehaviour
     public GameObject confirmPanel;
     public Button confirmButton; // 確認按鈕
     public Button cancelButton; // 取消按鈕
+    public GameObject treasure;
 
     [Header("Game Panel")]
     public GameObject gamePanel;
@@ -36,9 +37,11 @@ public class CardManager : MonoBehaviour
     [Header("Managers")]
     public GameObject manager; 
     public GameObject databaseManager; 
+
     private AvatarManager avatarManager;
     private PrizeController prizeController;
     private ComponentDisabler componentDisabler;
+    private StartSecondGame startSecondGame;
 
     private void Awake()
     {
@@ -62,6 +65,7 @@ public class CardManager : MonoBehaviour
         prizeController = prize.GetComponent<PrizeController>();
 
         componentDisabler = manager.GetComponent<ComponentDisabler>();
+        startSecondGame = treasure.GetComponent<StartSecondGame>();
     }
 
     private void SetupCards()
@@ -192,6 +196,7 @@ public class CardManager : MonoBehaviour
     {
         confirmPanel.SetActive(false); 
         componentDisabler.EnableComponents();
+        startSecondGame.CloseTreasure();
     }
     
     void OnConfirmPrizeButtonClick()

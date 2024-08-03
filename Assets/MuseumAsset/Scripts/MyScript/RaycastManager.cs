@@ -7,8 +7,8 @@ public class RaycastManager : MonoBehaviour
 {
     public Camera mainCamera;
     public GameObject manager;
-    public GameObject firstChest;
-    public GameObject secondChest;
+    public GameObject firstTreasure;
+    public GameObject secondTreasure;
 
     public bool isInfo = false;
     private ExhibitInteraction exhibitInteraction;
@@ -18,8 +18,8 @@ public class RaycastManager : MonoBehaviour
     void Start()
     {
         exhibitInteraction = manager.GetComponent<ExhibitInteraction>();
-        startFirstGame = firstChest.GetComponent<StartFirstGame>();
-        startSecondGame = secondChest.GetComponent<StartSecondGame>();
+        startFirstGame = firstTreasure.GetComponent<StartFirstGame>();
+        startSecondGame = secondTreasure.GetComponent<StartSecondGame>();
     }
     
     void Update()
@@ -34,7 +34,7 @@ public class RaycastManager : MonoBehaviour
             {
                 // if (hitObj.collider.CompareTag("prize1"))
                 // {
-                //     OpenChest();
+                //     OpenTreasure();
                 // }
                 string hitTag = hitObj.collider.gameObject.tag;
                 switch (hitTag)
@@ -47,11 +47,11 @@ public class RaycastManager : MonoBehaviour
                         break;
 
                     case "prize1":
-                        startFirstGame.OpenChest();
+                        startFirstGame.OpenTreasure();
                         break;
 
                     case "prize2":
-                        startSecondGame.OpenChest();
+                        startSecondGame.OpenTreasure();
                         break;
 
                     default:
