@@ -17,6 +17,9 @@ public class LoginManager : MonoBehaviour
     private IMongoDatabase userDatabase;
     private IMongoCollection<BsonDocument> accountCollection;
     private ComponentDisabler componentDisabler;
+    private Bird bird;
+
+    
 
 
     public static string LoggedInUsername { get; private set; }
@@ -28,6 +31,7 @@ public class LoginManager : MonoBehaviour
         client = new MongoClient("mongodb+srv://popo:K5q4fl0en5NzhkLq@unity.yrrt9gw.mongodb.net/?retryWrites=true&w=majority&appName=unity");
         userDatabase = client.GetDatabase("UserDatabase");
         accountCollection = userDatabase.GetCollection<BsonDocument>("UserAccounts");
+        bird = FindObjectOfType<Bird>();
 
         componentDisabler.DisableComponents();
         loginButton.onClick.AddListener(OnLogin);
@@ -56,6 +60,7 @@ public class LoginManager : MonoBehaviour
 
             messageText.text = "登入成功!";
             loginPanel.SetActive(false);
+            bird.StartIntro();
             componentDisabler.EnableComponents();
         }
         else
